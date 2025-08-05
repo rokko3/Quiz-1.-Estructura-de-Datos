@@ -13,7 +13,7 @@ La simulacion propuesta maneja los sitios visitados, siendo estos ingresados por
 
 # Inputs para la simulacion #2
 
-![Input](Fotos/input2.png)
+![Input](Fotos/intput2.png)
 
 # Outputs de la simulacion #2
 
