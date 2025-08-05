@@ -1,8 +1,8 @@
-import time
-from collections import deque
-import random
+import time # libreria para el tiempo
+from collections import deque #agregar la cola
+import random #para probabilidad de llegar cliente
 
-class SistemaAtencionClientes:
+class Sistema:
     def __init__(self, capacidad_maxima):
         self.cola_clientes = deque()
         self.capacidad_maxima = capacidad_maxima
@@ -12,23 +12,23 @@ class SistemaAtencionClientes:
         return random.choice([True, False])
 
     def atender_cliente(self):
-        if self.cola_clientes:
-            cliente = self.cola_clientes.popleft()
-            print(f"Atendiendo al cliente: {cliente}")
+        if self.cola_clientes: # verifica si hay clientes en la cola
+            cliente = self.cola_clientes.popleft() #
+            print("Atendiendo al cliente:" +cliente)
             time.sleep(0.5)  # tiempo de atencion
-            print(f"Cliente {cliente} finalizado.")
+            print("Cliente"+ cliente+ "finalizado")
             return True
         return False
 
     def espacio_disponible(self):
-        return len(self.cola_clientes) < self.capacidad_maxima
+        return len(self.cola_clientes) < self.capacidad_maxima #verifica si hay espacio disponible para agregar en la cola dependiendo del a capacidad maxima
 
     def agregar_cliente(self, cliente_id):
         if self.espacio_disponible():
             self.cola_clientes.append(cliente_id)
-            print(f"Cliente {cliente_id} agregado a la cola.")
+            print("Cliente" + cliente_id + "agregado a la cola")
         else:
-            print(f"Cola llena. Cliente {cliente_id} espera espacio...")
+            print("Cola llena, cliente"+ cliente_id+" en espera")
 
             # Esperar a que se libere un espacio
             while not self.espacio_disponible():
@@ -49,9 +49,8 @@ class SistemaAtencionClientes:
                 self.atender_cliente()
                 cliente_id += 1
             else:
-                print("No llegó ningún cliente en este ciclo.")
+                print("No llego ningun cliente en este tiempo.")
                 time.sleep(0.5)
 
-# Simulación del sistema
-sistema = SistemaAtencionClientes(capacidad_maxima=3)
+sistema = Sistema(capacidad_maxima=3) # seleccionar la capacidad de atencion
 sistema.ejecutar(total_clientes=10)
