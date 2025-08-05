@@ -3,10 +3,10 @@ La simulacion presente permite dar a entender el uso de las colas cuando se tien
 # Diagrama de flujo
 ![Diagrama](Fotos/Diagrama.png)
 # Inputs #1
-![Input]()
+![Input](Fotos/input1.png)
 # Outputs #1
-![Output]()
+![Output](Fotos/output2.png)
 # Inputs #2
-![Input]()
+![Input](Fotos/input2.png)
 # Outputs #2
-![Output]()
+![Output](Fotos/output2.png)
