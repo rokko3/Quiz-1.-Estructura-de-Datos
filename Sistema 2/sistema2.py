@@ -35,16 +35,16 @@ class Sistema:
                 time.sleep(0.5)
                 self.atender_cliente()  # Simula que se atiende alguien y se libera espacio
 
-            self.cola_clientes.append(cliente_id)
+            self.cola_clientes.append(cliente_id) # agrega el cliente
             print("Cliente "+cliente_id +"agregado a la cola tras liberar espacio.")
 
     def ejecutar(self, total_clientes):
-        cliente_id = 1
-        while cliente_id <= total_clientes:
+        cliente_id = 1 #simula la entrada de clientes
+        while cliente_id <= total_clientes: 
             print("\nEsperando cliente nuevo...")
             time.sleep(0.5)
             if self.cliente_llega():
-                print(f"Cliente {cliente_id} ha llegado.")
+                print("Cliente"+ cliente_id+ "ha llegado.")
                 self.agregar_cliente(cliente_id)
                 self.atender_cliente()
                 cliente_id += 1
