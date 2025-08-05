@@ -1,8 +1,8 @@
 class Sistema1:
     def __init__(self):
-        self.pila_delantera = [] 
+        self.pila_delantera = [] # creacion de pila
         self.pila_trasera = []   
-        self.pagina_actual = None
+        self.pagina_actual = None # pagina actual
 
     def visitar_pagina(self, url):
         if self.pagina_actual:
