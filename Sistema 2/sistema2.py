@@ -1,56 +1,69 @@
-import time # libreria para el tiempo
-from collections import deque #agregar la cola
-import random #para probabilidad de llegar cliente
+import time
+import random
+from collections import deque
 
-class Sistema:
-    def __init__(self, capacidad_maxima):
-        self.cola_clientes = deque()
-        self.capacidad_maxima = capacidad_maxima
+class SistemaColas:
+    def __init__(self, capacidad):
+        self.cola = deque(maxlen=capacidad)
+        self.capacidad = capacidad
+        self.clientes_atendidos = 0
+        self.clientes_rechazados = 0
+        self.simulacion_activa = True
 
-    def cliente_llega(self):
-        # LLegada aleatoria de un cliente 50%
-        return random.choice([True, False])
+    def llegada_clientes(self):
+        while self.simulacion_activa:
 
-    def atender_cliente(self):
-        if self.cola_clientes: # verifica si hay clientes en la cola
-            cliente = self.cola_clientes.popleft() #
-            print("Atendiendo al cliente:" +cliente)
-            time.sleep(0.5)  # tiempo de atencion
-            print("Cliente"+ cliente+ "finalizado")
-            return True
-        return False
+            nuevos_clientes = random.randint(0, 3)
+            
+            for _ in range(nuevos_clientes):
+                cliente_id = f"C-{time.time():.0f}"
+                if len(self.cola) < self.capacidad:
+                    self.cola.append(cliente_id)
+                    print(f"🟢 [Llegada] Cliente {cliente_id} | En cola: {len(self.cola)}/{self.capacidad}")
+                else:
+                    self.clientes_rechazados += 1
+                    print(f"🔴 [Rechazado] Cola llena - Cliente {cliente_id}")
+            
+   
+            time.sleep(random.uniform(1, 3))
 
-    def espacio_disponible(self):
-        return len(self.cola_clientes) < self.capacidad_maxima #verifica si hay espacio disponible para agregar en la cola dependiendo del a capacidad maxima
-
-    def agregar_cliente(self, cliente_id):
-        if self.espacio_disponible():
-            self.cola_clientes.append(cliente_id)
-            print("Cliente" + cliente_id + "agregado a la cola")
-        else:
-            print("Cola llena, cliente"+ cliente_id+" en espera")
-
-            # Esperar a que se libere un espacio
-            while not self.espacio_disponible():
-                time.sleep(0.5)
-                self.atender_cliente()  # Simula que se atiende alguien y se libera espacio
-
-            self.cola_clientes.append(cliente_id) # agrega el cliente
-            print("Cliente "+cliente_id +"agregado a la cola tras liberar espacio.")
-
-    def ejecutar(self, total_clientes):
-        cliente_id = 1 #simula la entrada de clientes
-        while cliente_id <= total_clientes: 
-            print("\nEsperando cliente nuevo...")
-            time.sleep(0.5)
-            if self.cliente_llega():
-                print("Cliente"+ cliente_id+ "ha llegado.")
-                self.agregar_cliente(cliente_id)
-                self.atender_cliente()
-                cliente_id += 1
+    def atender_clientes(self):
+        while self.simulacion_activa or self.cola:
+            if self.cola:
+                cliente = self.cola.popleft()
+                print(f"🟡 [Atendiendo] Cliente {cliente} | Tiempo: 3 segundos...")
+                time.sleep(3)
+                self.clientes_atendidos += 1
+                print(f"🟣 [Atendido] Cliente {cliente} | Total: {self.clientes_atendidos}")
             else:
-                print("No llego ningun cliente en este tiempo.")
-                time.sleep(0.5)
+                print("⚪ [Espera] No hay clientes en cola")
+                time.sleep(1)
 
-sistema = Sistema(capacidad_maxima=3) # seleccionar la capacidad de atencion
-sistema.ejecutar(total_clientes=10)
+    def simular(self, duracion_total=30):
+        print(f"\n=== INICIANDO SIMULACIÓN ===")
+        print(f"Capacidad de cola: {self.capacidad}")
+        print(f"Duración: {duracion_total} segundos\n")
+        
+
+        import threading
+        hilo_llegadas = threading.Thread(target=self.llegada_clientes)
+        hilo_llegadas.start()
+        
+    
+        tiempo_inicio = time.time()
+        while (time.time() - tiempo_inicio) < duracion_total:
+            self.atender_clientes()
+        
+
+        self.simulacion_activa = False
+        hilo_llegadas.join()
+        
+        print("\n=== ESTADÍSTICAS FINALES ===")
+        print(f"Clientes atendidos: {self.clientes_atendidos}")
+        print(f"Clientes rechazados: {self.clientes_rechazados}")
+        print(f"Clientes en cola al finalizar: {len(self.cola)}")
+
+
+if __name__ == "__main__":
+    sistema = SistemaColas(capacidad=5)
+    sistema.simular(duracion_total=10)

@@ -35,6 +35,7 @@ nav.visitar_pagina("pagina3.com")
 
 nav.retroceder()
 nav.retroceder()
+nav.retroceder()
+nav.retroceder()
 nav.avanzar()
-nav.avanzar()
-nav.avanzar() 
+

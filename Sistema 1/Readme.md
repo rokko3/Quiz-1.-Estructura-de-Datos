@@ -3,11 +3,19 @@ La simulacion propuesta maneja los sitios visitados, siendo estos ingresados por
 
 ![Diagrama de flujo](Fotos/Diagrama.png)
 
-# Inputs para la simulacion
+# Inputs para la simulacion #1
 
 ![Input](Fotos/input.png)
 
-# Outputs de la simulacion
+# Outputs de la simulacion #1
+
+![Simulacion por python](Fotos/output.png)
+
+# Inputs para la simulacion #2
+
+![Input](Fotos/input2.png)
+
+# Outputs de la simulacion #2
 
 ![Simulacion por python](Fotos/output.png)
 
