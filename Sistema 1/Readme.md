@@ -1,8 +1,13 @@
 La simulacion propuesta maneja los sitios visitados, siendo estos ingresados por el usuario y al mismo tiempo obteniendo la url para luego almacenarlo en pilas, permite la obtencion de sitios visitados anteriormente mediante el uso de la pila trasera, y visitar sitios ya vistos mediante el uso de la pila delantera
+# Diagrama de flujo
 
-![Diagrama de flujo](Diagrama.png)
+![Diagrama de flujo](Fotos/Diagrama.png)
 
-#Simulacion por python
+# Inputs para la simulacion
 
-![Simulacion por python](output.png)
+![Input](Fotos/input.png)
+
+# Outputs de la simulacion
+
+![Simulacion por python](Fotos/output.png)
 
