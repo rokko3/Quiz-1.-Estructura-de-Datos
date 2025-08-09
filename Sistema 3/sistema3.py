@@ -40,13 +40,12 @@ words = ["apple", "app", "application", "banana", "band"]
 for word in words:
     arbol.insert(word)
 
-# Pruebas de búsqueda
-print(arbol.search("apple"))     # True
-print(arbol.search("app"))       # True
-print(arbol.search("application")) # True
-print(arbol.search("ban"))       # False (no es una palabra completa)
+
+print(arbol.search("apple"))    
+print(arbol.search("application")) 
+print(arbol.search("ban"))      
                
-# Pruebas de prefijo
-print(arbol.startsWith("ban"))   # True
-print(arbol.startsWith("app"))   # True
-print(arbol.startsWith("orange")) # False
+print(arbol.startsWith("ban"))  
+print(arbol.startsWith("app"))   
+print(arbol.root.children[''])
+print(arbol.startsWith("orange")) 
