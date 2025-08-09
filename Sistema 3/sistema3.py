@@ -5,15 +5,15 @@ class nodo:
 
 class arbol:
     def __init__(self):
-        self.root = nodo()  # nodo raiz
+        self.root = nodo()  
 
     def insert(self, word: str) -> None: # funcion void para insertar, pidiendo que la palabra sea de tipo string
         nodo_actual = self.root
         for c in word:
             if c not in nodo_actual.children:
-                nodo_actual.children[c] = nodo()  # Crea un nuevo nodo si el carácter no existe
-            nodo_actual = nodo_actual.children[c]  # Avanza al siguiente nodo
-        nodo_actual.endOfWord = True  # Marca el final de la palabra
+                nodo_actual.children[c] = nodo()  
+            nodo_actual = nodo_actual.children[c]  
+        nodo_actual.endOfWord = True  
 
     def search(self, word: str) -> bool: #devuelve true o false
         nodo_actual = self.root
@@ -35,17 +35,17 @@ class arbol:
 
 arbol = arbol()
     
-# Insertar palabras
-words = ["apple", "app", "application", "banana", "band"]
-for word in words:
+palabras = ["manzana", "app", "application", "banana", "band"]
+for word in palabras:
     arbol.insert(word)
 
-
-print(arbol.search("apple"))    
+# pruebas
+print(arbol.search("apple"))     
+print(arbol.search("app"))       
 print(arbol.search("application")) 
-print(arbol.search("ban"))      
+print(arbol.search("ban"))     
                
-print(arbol.startsWith("ban"))  
-print(arbol.startsWith("app"))   
-print(arbol.root.children[''])
-print(arbol.startsWith("orange")) 
+# Pruebas de prefijo
+print(arbol.startsWith("ban"))   # True
+print(arbol.startsWith("app"))   # True
+print(arbol.startsWith("orange")) # False
