@@ -1,51 +1,48 @@
-class nodo:
+class Nodo:
     def __init__(self):
-        self.children = {}  # usamos un diccionario para almacenar 'clave' - valor 
-        self.endOfWord = False  # nos permite indicar si el caracter es el final de una palabra
+        self.hijos = {} 
+        self.fin_palabra = False  
 
-class arbol:
+class ArbolPrefijos:
     def __init__(self):
-        self.root = nodo()  
-
-    def insert(self, word: str) -> None: # funcion void para insertar, pidiendo que la palabra sea de tipo string
-        nodo_actual = self.root
-        for c in word:
-            if c not in nodo_actual.children:
-                nodo_actual.children[c] = nodo()  
-            nodo_actual = nodo_actual.children[c]  
-        nodo_actual.endOfWord = True  
-
-    def search(self, word: str) -> bool: #devuelve true o false
-        nodo_actual = self.root
-        for c in word:
-            if c not in nodo_actual.children:
-                return False  # el caracter no existe
-            nodo_actual = nodo_actual.children[c]
-        return nodo_actual.endOfWord  # final de la palabra
-
-    def startsWith(self, prefijo: str) -> bool: # devuelve true o falso
-        if self.search(prefijo):
-            nodo_actual = self.root
-            for c in prefijo:
-                if c not in nodo_actual.children:
-                    return False
-                nodo_actual = nodo_actual.children[c]
-            return True 
-
-
-arbol = arbol()
+        self.raiz = Nodo()
     
-palabras = ["manzana", "app", "application", "banana", "band"]
-for word in palabras:
-    arbol.insert(word)
+    def insertar(self, palabra: str):
+        nodo_actual = self.raiz # selecciona el nodo raiz
+        for letra in palabra: # recorre cada letra en la palabra ingresada
+            if letra not in nodo_actual.hijos: # si la letra no se encuentra en un nodo hijo
+                nodo_actual.hijos[letra] = Nodo() # agrega la letra como nodo hijo
+            nodo_actual = nodo_actual.hijos[letra]
+        nodo_actual.fin_palabra = True # la ultima letra se considera como fin de la palabra
+    
+    def buscar_por_prefijo(self, prefijo: str) -> list: # devuelve una lista, parametro un prefijo str
+        nodo_actual = self.raiz
+        
+        # Navegar hasta el final del prefijo
+        for letra in prefijo:
+            if letra not in nodo_actual.hijos:
+                return []
+            nodo_actual = nodo_actual.hijos[letra]
+        
+        # Recoger todas las palabras desde este nodo
+        palabras = []
+        self._recoger_palabras(nodo_actual, prefijo, palabras)
+        return palabras
+    
+    def _recoger_palabras(self, nodo, prefijo_actual, palabras):
+        if nodo.fin_palabra:
+            palabras.append(prefijo_actual)
+        
+        for letra, nodo_hijo in nodo.hijos.items():
+            self._recoger_palabras(nodo_hijo, prefijo_actual + letra, palabras)
 
-# pruebas
-print(arbol.search("apple"))     
-print(arbol.search("app"))       
-print(arbol.search("application")) 
-print(arbol.search("ban"))     
-               
-# Pruebas de prefijo
-print(arbol.startsWith("ban"))   # True
-print(arbol.startsWith("app"))   # True
-print(arbol.startsWith("orange")) # False
+
+
+arbol = ArbolPrefijos()
+
+# Insertar palabras
+palabras = ["manzana", "manano", "manuel", "banana", "band", "apple"]
+for palabra in palabras:
+    arbol.insertar(palabra)
+
+print(arbol.buscar_por_prefijo("man"))
